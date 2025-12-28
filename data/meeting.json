@@ -1,0 +1,566 @@
+{
+    "meta": {
+        "title": "生命河網路牧區小組聚會",
+        "date": "2025-10-04",
+        "version": "2.0"
+    },
+    "pages": {
+        "page01": {
+            "id": "page01",
+            "title": "在耶穌裡我們是一家人",
+            "navLabel": "家",
+            "type": "welcome",
+            "background": "slide1.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "歡迎參加生命河網路牧區小組聚會",
+                    "style": {
+                        "fontSize": "48px",
+                        "textAlign": "center",
+                        "color": "#ffffff",
+                        "textShadow": "0 0 10px rgba(255,255,255,0.8)"
+                    }
+                },
+                {
+                    "type": "text",
+                    "content": "主持：Doreen姊妹",
+                    "editable": true,
+                    "field": "hostName",
+                    "style": {
+                        "fontSize": "60px",
+                        "textAlign": "center",
+                        "color": "#f1c40f"
+                    }
+                }
+            ]
+        },
+        "page02": {
+            "id": "page02",
+            "title": "注意事項",
+            "navLabel": "提醒",
+            "type": "notes",
+            "background": "slide2.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "1. 請大家在名字前添加組號<br>2. 若您還沒有報名,請上網報名<br>3. 如有代禱事項或問題,請聯絡小組長<br>4. 牧師分享信息、讀經、敬拜時,請靜音<br>5. 請儘量打開視訊（video）",
+                    "style": {
+                        "fontSize": "30px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page03": {
+            "id": "page03",
+            "title": "歡迎詩歌",
+            "navLabel": "迎新",
+            "type": "song",
+            "background": "slide3.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "我們歡迎你，真歡迎你<br>在主裡誠心歡迎!<br>哈利路亞!<br>我們歡迎你，真歡迎你<br>在主裡誠心歡迎!",
+                    "style": {
+                        "fontSize": "40px",
+                        "textAlign": "center",
+                        "color": "#ffeb3b",
+                        "lineHeight": "1.6"
+                    }
+                }
+            ]
+        },
+        "page04": {
+            "id": "page04",
+            "title": "敬拜讚美",
+            "navLabel": "敬拜",
+            "type": "worship-header",
+            "background": "slide4.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "活着就要荣耀主",
+                    "style": {
+                        "fontSize": "48px",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                },
+                {
+                    "type": "text",
+                    "content": "Sheri姊妹帶領",
+                    "editable": true,
+                    "field": "worshipLeader",
+                    "style": {
+                        "fontSize": "40px",
+                        "textAlign": "center",
+                        "color": "#f1c40f"
+                    }
+                }
+            ]
+        },
+        "page05": {
+            "id": "page05",
+            "title": "跨越的人生",
+            "navLabel": "短講",
+            "type": "sermon-title",
+            "background": "slide5.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "跨越的人生",
+                    "style": {
+                        "fontSize": "64px",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page06": {
+            "id": "page06",
+            "title": "劉彤牧師信息",
+            "navLabel": "證道",
+            "type": "sermon-quote",
+            "background": "slide6.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "盡性就是熱情",
+                    "style": {
+                        "fontSize": "52px",
+                        "textAlign": "center",
+                        "color": "#4361ee"
+                    }
+                },
+                {
+                    "type": "text",
+                    "content": "—— 劉彤牧師",
+                    "style": {
+                        "fontSize": "28px",
+                        "textAlign": "center",
+                        "color": "#bdc3c7"
+                    }
+                }
+            ]
+        },
+        "page07": {
+            "id": "page07",
+            "title": "专题：聖餐與短講",
+            "navLabel": "聖餐",
+            "type": "special-topic",
+            "background": "slide7.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "主領：王蕭殷牧師",
+                    "style": {
+                        "fontSize": "36px",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page08": {
+            "id": "page08",
+            "title": "慶祝十月份壽星",
+            "navLabel": "慶生",
+            "type": "birthday",
+            "background": "slide8.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "Daniel區長<br>(1) 宇嶸, 陳英<br>(2) 慶林, 段冰, 王梅, 冉強, 潘婉玲, 王曉艷, 譚文婷<br>(3) 楊庭英, 程浩<br>(7) 張梓靖<br>(8) 劉芳, 陳惠婷, 張俊<br>(10) 趙琴, Joanne Chiang",
+                    "style": {
+                        "fontSize": "30px",
+                        "lineHeight": "1.8",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page09": {
+            "id": "page09",
+            "title": "大群見證故事／感恩時間",
+            "navLabel": "見證",
+            "type": "testimony-guide",
+            "background": "slide9.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "(5-10分鐘，限一人一個見證，簡潔生動)",
+                    "style": {
+                        "fontSize": "28px",
+                        "textAlign": "center",
+                        "color": "#f1c40f"
+                    }
+                },
+                {
+                    "type": "text",
+                    "content": "✔ 聖靈的感動與引導<br>✔ 靈命的成長與突破<br>✔ 病得醫治 / 靈裡得釋放<br>✔ 得勝的生活",
+                    "style": {
+                        "fontSize": "26px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page10": {
+            "id": "page10",
+            "title": "今日經文",
+            "navLabel": "經文",
+            "type": "scripture",
+            "background": "slide10.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "所以，你們或吃或喝，無論做甚麼，都要為榮耀神而行。",
+                    "style": {
+                        "fontSize": "36px",
+                        "textAlign": "center",
+                        "color": "#ffffff",
+                        "fontStyle": "italic"
+                    }
+                },
+                {
+                    "type": "text",
+                    "content": "～哥林多前書 10:31",
+                    "style": {
+                        "fontSize": "28px",
+                        "textAlign": "center",
+                        "color": "#2ecc71"
+                    }
+                }
+            ]
+        },
+        "page11": {
+            "id": "page11",
+            "title": "查經要點",
+            "navLabel": "查經",
+            "type": "study-outline",
+            "background": "slide11.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "1. 使用自由的兩個原則（林前 10:23-24）<br>2. 兩個原則的應用<br>　A. 市場的食物（25-26）<br>　B. 筵席的食物（27-30）<br>3. 凡事為榮耀神而行<br>　A. 凡事要榮耀神（31）<br>　B. 凡事要造就人（32）<br>4. 要效法保羅的榜樣（10:33-11:1）",
+                    "style": {
+                        "fontSize": "30px",
+                        "lineHeight": "1.7",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page12": {
+            "id": "page12",
+            "title": "查經問題",
+            "navLabel": "問題",
+            "type": "study-questions",
+            "background": "slide12.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "1. 你曾為何人或何事放棄自由？結果如何？請簡述。<br>2. 你曾否使用過這兩個原則？結果如何呢？請簡短分享。<br>3. 為什麼我們能夠自由吃喝市場買來的或筵席裡的食物呢？在哪一種情形下我們要選擇不吃喝呢？<br>4. 在生活或職場中，有哪些具體行動可以榮耀神？你想在哪方面來榮耀神呢？<br>5. 請小組長帶領大家共同思考一個榮耀神的行動，得以帶領人歸向主。",
+                    "style": {
+                        "fontSize": "26px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page13": {
+            "id": "page13",
+            "title": "2025年第四季課程",
+            "navLabel": "課程",
+            "type": "course-title",
+            "background": "slide13.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "2025年第四季課程",
+                    "style": {
+                        "fontSize": "48px",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page14": {
+            "id": "page14",
+            "title": "課程內容（1–5）",
+            "navLabel": "課",
+            "type": "course-content",
+            "background": "slide14.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "1. 耶穌是誰？<br>2. 救恩(耶穌為什麼而死?)<br>3. 信主(如何得著信心?)<br>4. 禱告(為什麼要禱告，怎樣禱告?)<br>5. 讀經(為什麼要讀聖經,怎麼讀聖經?)",
+                    "style": {
+                        "fontSize": "30px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page15": {
+            "id": "page15",
+            "title": "課程內容（6–10）",
+            "navLabel": "課",
+            "type": "course-content",
+            "background": "slide15.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "6. 聖靈(什麼是聖靈,聖靈與你的關係為何?)<br>7. 抵擋(如何抵擋邪惡?)<br>8. 傳福音(為什麼要傳福音,怎樣傳福音？)<br>9. 醫治(神今天還醫治人嗎?)<br>10. 教會(教會是什麼?)",
+                    "style": {
+                        "fontSize": "30px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page16": {
+            "id": "page16",
+            "title": "啟程福音課程時間",
+            "navLabel": "啟程",
+            "type": "course-schedule",
+            "background": "slide16.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "2025年第二期網絡啟程福音視訊課程（自9/7/2025始）<br>課程時間：週日（美國,加拿大,墨西哥）<br>　美西時間：4:30 PM - 6:30 PM<br>　美中時間：6:30 PM - 8:30 PM<br>　美東時間：7:30 PM - 9:30 PM<br>　北京時間：週一 7:30 AM - 9:30 AM<br><br>報名：ROLPLI.net",
+                    "style": {
+                        "fontSize": "28px",
+                        "lineHeight": "1.6",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page17": {
+            "id": "page17",
+            "title": "啟程 Zoom 連結",
+            "navLabel": "链接",
+            "type": "zoom-info",
+            "background": "slide17.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "https://zoom.us/j/87175909068?pwd=YURndUtEOXYybHVHb2xqaGUwdkdSdz09  ",
+                    "editable": true,
+                    "field": "zoomLink",
+                    "style": {
+                        "fontSize": "24px",
+                        "textAlign": "center",
+                        "color": "#3498db",
+                        "wordBreak": "break-all"
+                    }
+                },
+                {
+                    "type": "text",
+                    "content": "Meeting ID：871 7590 9068<br>Passcode：7777",
+                    "style": {
+                        "fontSize": "28px",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page18": {
+            "id": "page18",
+            "title": "為啟程學員代禱（第1組）",
+            "navLabel": "代禱1",
+            "type": "prayer-list",
+            "background": "slide18.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "• 戎奇, 袁飛(Yuanfei)<br>• 許可微, 鄭偉林<br>• 魯文超, 李翔(Xiang Li)<br>• 徐金濤, 周穎, 王海潮",
+                    "style": {
+                        "fontSize": "28px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page19": {
+            "id": "page19",
+            "title": "為啟程學員代禱（第2組）",
+            "navLabel": "代禱2",
+            "type": "prayer-list",
+            "background": "slide19.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "• 張強(John Zhang), 王雯<br>• Polly(練瑞櫻), 陳亮<br>• 陳立紅, 張國萌<br>• Amy Liu, 宋曉瑋",
+                    "style": {
+                        "fontSize": "28px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page20": {
+            "id": "page20",
+            "title": "為啟程學員代禱（第3組）",
+            "navLabel": "代禱3",
+            "type": "prayer-list",
+            "background": "slide20.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "• 楊菲Faye, 石锦<br>• 闵雅婧, Sunny, Josie",
+                    "style": {
+                        "fontSize": "28px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page21": {
+            "id": "page21",
+            "title": "為啟程學員代禱（第4–5組）",
+            "navLabel": "代禱4",
+            "type": "prayer-list",
+            "background": "slide21.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "• 徐艷艷, 李娟, 程亮, 黃明浩<br>• 黃磊(Huang Lei), 侯魯雲<br>• Jennifer Liu, 德蘭(Delan), Abigail Wang<br>• 李淑英(度), 王雷, Sabrina, 徐靜(Jing)",
+                    "style": {
+                        "fontSize": "28px",
+                        "lineHeight": "1.8",
+                        "textAlign": "left",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page22": {
+            "id": "page22",
+            "title": "週末聖靈烈火敬拜/醫治禱告 訓練",
+            "navLabel": "烈火",
+            "type": "fire-training",
+            "background": "slide22.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "週六場<br>美西(早晨)：7:00 AM - 9:00 AM<br>美東(早晨)：10:00 AM - 12:00 PM<br>北京/台北(晚上)：10:00 PM - 00:00 AM",
+                    "style": {
+                        "fontSize": "28px",
+                        "lineHeight": "1.6",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                },
+                {
+                    "type": "text",
+                    "content": "週日場<br>北京/台北(晚上)：8:00 PM - 10:00 PM<br>美西(早晨)：5:00 AM - 7:00 AM<br>美東(早晨)：8:00 AM - 10:00 AM",
+                    "style": {
+                        "fontSize": "28px",
+                        "lineHeight": "1.6",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        },
+        "page23": {
+            "id": "page23",
+            "title": "預留頁 A - 臨時公告",
+            "navLabel": "公告",
+            "type": "reserved",
+            "background": "slide23.jpg",
+            "sections": []
+        },
+        "page24": {
+            "id": "page24",
+            "title": "預留頁 B - 家事報告",
+            "navLabel": "家事",
+            "type": "reserved",
+            "background": "slide24.jpg",
+            "sections": []
+        },
+        "page25": {
+            "id": "page25",
+            "title": "預留頁 C - 主持人備註",
+            "navLabel": "備註",
+            "type": "reserved",
+            "background": "slide25.jpg",
+            "sections": []
+        },
+        "page26": {
+            "id": "page26",
+            "title": "預留頁 D - 緊急通知",
+            "navLabel": "緊急",
+            "type": "reserved",
+            "background": "slide26.jpg",
+            "sections": []
+        },
+        "page27": {
+            "id": "page27",
+            "title": "預留頁 E - 新增見證",
+            "navLabel": "見證",
+            "type": "reserved",
+            "background": "slide27.jpg",
+            "sections": []
+        },
+        "page28": {
+            "id": "page28",
+            "title": "預留頁 F - 特別禱告",
+            "navLabel": "特禱",
+            "type": "reserved",
+            "background": "slide28.jpg",
+            "sections": []
+        },
+        "page29": {
+            "id": "page29",
+            "title": "預留頁 G - 未使用",
+            "navLabel": "預留",
+            "type": "reserved",
+            "background": "slide29.jpg",
+            "sections": []
+        },
+        "page30": {
+            "id": "page30",
+            "title": "下周見",
+            "navLabel": "下周",
+            "type": "closing",
+            "background": "slide30.jpg",
+            "sections": [
+                {
+                    "type": "text",
+                    "content": "請掃碼關注",
+                    "style": {
+                        "fontSize": "36px",
+                        "textAlign": "center",
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+        }
+    }
+}

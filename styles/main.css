@@ -1,0 +1,287 @@
+/* ============= 全局 ============= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: white;
+    font-family: "標楷體", "Microsoft JhengHei", "PingFang TC", sans-serif;
+    overflow: hidden;
+}
+
+#main {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.page-title {
+    font-size: 60px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.section {
+    margin: 12px 0;
+}
+
+/* ============= 底部导航面板（伪竖排） ============= */
+#nav-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* 增加高度以容纳大字号的竖排文字 */
+    height: 80px;
+
+    /* 设计师搭配建议：沉浸式深湖绿 (Deep Lake Teal) */
+    /* 既然背景是唯美的湖光山色，导航栏不应太“跳”，而应像水面的倒影一样融合 */
+    background: rgba(26, 50, 60, 0.85);
+
+    /* 毛玻璃特效：让背景模糊透出，显得高级且融合 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    /* 强对比度文字颜色 */
+    color: #ffffff;
+    padding: 0;
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+
+    /* 顶部加一条极其微弱的亮线，模拟水面反光 */
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+    display: flex;
+    align-items: center;
+    /* 均分宽度 */
+    justify-content: space-between;
+
+    /* 间隙保持适中即可，不需要靠它来挤压了 */
+    gap: 6px;
+    padding: 0 6px;
+}
+
+/* 隐藏滚动条 */
+#nav-panel::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.nav-item {
+    /* 撑满容器 */
+    flex: 1;
+    height: 100%;
+
+    /* 3. 去掉之前的分割线，改用间隙 */
+    border-right: none;
+
+    /* 深色背景下的半透明白色，形成磨砂感 */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+    text-align: center;
+
+    /* 调整字号：20px */
+    font-size: 20px;
+    font-weight: 400;
+
+    /* =========================================
+       终极方案：使用 CSS 原生竖排模式 
+       ========================================= */
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    /* 让英文字母也直立 */
+
+    /* 居中对齐 */
+    display: flex;
+    justify-content: center;
+    /* 垂直方向居中 (因为主轴变了) */
+    align-items: center;
+    /* 水平方向居中 */
+
+    /* 极小内边距 */
+    padding: 0;
+
+    /* 最小宽度设为0 */
+    min-width: 0;
+
+    /* 深色背景，文字要用亮色 */
+    color: #bdc3c7;
+    font-family: Arial, Helvetica, sans-serif;
+
+    /* 避免字间距过大 (Increased by 1px: -2px -> -1px) */
+    letter-spacing: -1px;
+}
+
+.nav-item:last-child {
+    border-right: none;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    /* 激活色：提取自图片中"Sheri"字的金色/橙色，与冷色背景形成互补 */
+    background: #e67e22;
+
+    color: white;
+    transform: none;
+    /*取消位移以免影响布局*/
+    box-shadow: 0 0 15px rgba(230, 126, 34, 0.6);
+}
+
+/* ============= 右边缘 1/3 处：结束并保存按钮 ============= */
+#exit-trigger {
+    position: fixed;
+    top: 66.6vh;
+    right: 0;
+    width: 60px;
+    height: 80px;
+    background: transparent;
+    z-index: 999;
+    cursor: pointer;
+    /* 可选：加细微视觉提示 */
+    /* border-left: 1px solid rgba(255,255,255,0.1); */
+}
+
+#exit-trigger:hover::after {
+    content: "結束並保存";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* ============= 编辑面板 ============= */
+#edit-panel {
+    position: fixed;
+    /* 默认位置：屏幕中上方，避免遮挡中间 */
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 只水平居中 */
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    width: 320px;
+    display: none;
+    /* 允许拖拽 */
+    user-select: none;
+}
+
+/* 拖拽把手（标题栏） */
+#edit-panel h3 {
+    margin-top: 0;
+    cursor: move;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* 工具栏样式 */
+#editor-toolbar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.editor-btn {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 30px;
+}
+
+.editor-btn:hover {
+    background: #e0e0e0;
+}
+
+/* 富文本编辑区 */
+#edit-content-area {
+    width: 100%;
+    min-height: 100px;
+    max-height: 200px;
+    padding: 10px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow-y: auto;
+    background: #fff;
+    cursor: text;
+    user-select: text;
+    /* 必须允许选择文字 */
+    white-space: pre-wrap;
+    /* 保留换行和空格 */
+}
+
+#edit-panel input,
+#edit-panel select {
+    width: 100%;
+    padding: 6px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#edit-panel button {
+    padding: 6px 12px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#save-btn {
+    background: #27ae60;
+    color: white;
+}
+
+#cancel-btn {
+    background: #95a5a6;
+    color: white;
+}
+
+/* ============= 提示框 ============= */
+#toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+#toast.show {
+    opacity: 1;
+}
