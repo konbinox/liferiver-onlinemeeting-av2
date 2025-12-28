@@ -9,6 +9,9 @@ export function showEditPanel(section, targetEl, onSave) {
     };
 
     panel.innerHTML = '';
+    // Reset position to center (fix "disappearing" if dragged off-screen previously)
+    panel.style.transform = 'translateX(-50%)';
+    panel.style.top = '20%';
     panel.style.display = 'block';
 
     if (section.type === 'text') {

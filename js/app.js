@@ -83,7 +83,8 @@ class MeetingApp {
                 if (key === this.currentPageKey) item.classList.add('active');
 
                 // 仅显示文字标题，自动换行
-                item.textContent = page.navLabel;
+                // Fallback: if navLabel is missing, use title (first 2 chars) or page number
+                item.textContent = page.navLabel || page.title.substring(0, 2) || numStr;
 
                 item.onclick = () => this.selectPage(key);
                 panel.appendChild(item);
