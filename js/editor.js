@@ -5,11 +5,10 @@ export function showEditPanel(section, targetEl, onSave) {
         color: targetEl.style.color,
         fontSize: targetEl.style.fontSize,
         fontFamily: targetEl.style.fontFamily,
-        content: targetEl.innerHTML // For text preview if needed, but simple text updates are complex to preview live without breaking HTML
+        content: targetEl.innerHTML
     };
 
     panel.innerHTML = '';
-    // Reset position to center (fix "disappearing" if dragged off-screen previously)
     panel.style.transform = 'translateX(-50%)';
     panel.style.top = '20%';
     panel.style.display = 'block';
@@ -24,7 +23,7 @@ export function showEditPanel(section, targetEl, onSave) {
          <button class="editor-btn" data-cmd="italic" title="斜體"><i>I</i></button>
          <button class="editor-btn" data-cmd="underline" title="下劃線"><u>U</u></button>
          
-         <!-- 文字颜色 (新) -->
+         <!-- 文字颜色 -->
          <span style="position:relative; display:inline-block;">
             <button class="editor-btn" id="toolbar-color-btn" title="文字顏色"><span style="color:red">A</span></button>
             <input type="color" id="toolbar-color-input" style="position:absolute; left:0; top:0; width:100%; height:100%; opacity:0; cursor:pointer;" title="文字顏色">
@@ -36,6 +35,11 @@ export function showEditPanel(section, targetEl, onSave) {
          <button class="editor-btn" data-cmd="justifyRight" title="靠右">R</button>
          <span style="width:1px;background:#ddd;margin:0 4px;"></span>
          <button class="editor-btn" data-cmd="insertUnorderedList" title="清單">List</button>
+         
+         <!-- 新增多媒体按钮 -->
+         <span style="width:1px;background:#ddd;margin:0 4px;"></span>
+         <button class="editor-btn" id="insert-audio-btn" title="插入音訊">🎵</button>
+         <button class="editor-btn" id="insert-video-btn" title="插入影片">🎥</button>
       </div>
 
       <!-- 可编辑区域 -->
@@ -74,24 +78,22 @@ export function showEditPanel(section, targetEl, onSave) {
       </div>
     `;
 
-        // Logic Controls
+        // === 现有逻辑：工具栏、预览、保存、取消、拖拽 ===
         const contentArea = document.getElementById('edit-content-area');
         const colorInput = document.getElementById('edit-color');
         const sizeInput = document.getElementById('edit-size');
         const fontInput = document.getElementById('edit-font');
 
-        // Toolbar Text Color Input Handler
+        // Toolbar Text Color
         const toolbarColorInput = document.getElementById('toolbar-color-input');
         toolbarColorInput.oninput = (e) => {
             document.execCommand('foreColor', false, e.target.value);
-            targetEl.innerHTML = contentArea.innerHTML; // Update preview
+            targetEl.innerHTML = contentArea.innerHTML;
         };
-        // Reset toolbar color input so change event fires even for same color if needed
         toolbarColorInput.onclick = (e) => { e.target.value = null; };
 
-        // Toolbar Handlers
-        panel.querySelectorAll('.editor-btn').forEach(btn => {
-            if (btn.id === 'toolbar-color-btn') return; // Skip color btn wrapper
+        // Bold, Italic, etc.
+        panel.querySelectorAll('.editor-btn:not(#toolbar-color-btn):not(#insert-audio-btn):not(#insert-video-btn)').forEach(btn => {
             btn.onclick = (e) => {
                 e.preventDefault();
                 const cmd = btn.dataset.cmd;
@@ -101,84 +103,71 @@ export function showEditPanel(section, targetEl, onSave) {
             };
         });
 
-        // Live Preview Handlers
+        // === 新增：插入音訊 ===
+        document.getElementById('insert-audio-btn')?.addEventListener('click', () => {
+            const url = prompt('請輸入 MP3 音訊網址\n（例如：assets/music/歡迎歌.mp3）');
+            if (url && url.trim()) {
+                const cleanUrl = url.trim();
+                const audioHtml = `<div class="media-section"><audio controls src="${cleanUrl}" type="audio/mpeg"></audio></div>`;
+                document.execCommand('insertHTML', false, audioHtml);
+                targetEl.innerHTML = contentArea.innerHTML;
+            }
+        });
+
+        // === 新增：插入影片 ===
+        document.getElementById('insert-video-btn')?.addEventListener('click', () => {
+            const url = prompt('請輸入 YouTube 或影片網址');
+            if (url && url.trim()) {
+                const cleanUrl = url.trim();
+                const videoHtml = `<div class="media-section"><a href="${cleanUrl}" target="_blank" style="display:inline-block;padding:8px 16px;background:#2c3e50;color:white;border-radius:4px;text-decoration:none;">▶ 點擊觀看影片</a></div>`;
+                document.execCommand('insertHTML', false, videoHtml);
+                targetEl.innerHTML = contentArea.innerHTML;
+            }
+        });
+
+        // Live Preview
         colorInput.oninput = (e) => { targetEl.style.color = e.target.value; };
         sizeInput.onchange = (e) => { targetEl.style.fontSize = e.target.value; };
         fontInput.onchange = (e) => { targetEl.style.fontFamily = e.target.value; };
-
-        // HTML Preview
-        contentArea.oninput = (e) => {
-            targetEl.innerHTML = contentArea.innerHTML;
-        };
+        contentArea.oninput = (e) => { targetEl.innerHTML = contentArea.innerHTML; };
 
         // Save
         document.getElementById('save-btn').onclick = () => {
-            section.content = contentArea.innerHTML; // Save HTML
+            section.content = contentArea.innerHTML;
             section.style = section.style || {};
             section.style.fontSize = sizeInput.value;
             section.style.color = colorInput.value;
             section.style.fontFamily = fontInput.value;
-
             onSave();
             panel.style.display = 'none';
         };
 
         // Cancel
         document.getElementById('cancel-btn').onclick = () => {
-            // Revert DOM styles
             targetEl.style.color = originalStyles.color;
             targetEl.style.fontSize = originalStyles.fontSize;
             targetEl.style.fontFamily = originalStyles.fontFamily;
-            targetEl.innerHTML = originalStyles.content; // Revert content
-
+            targetEl.innerHTML = originalStyles.content;
             panel.style.display = 'none';
         };
 
-        // Make Draggable
+        // Draggable
         const header = panel.querySelector('h3');
-        let isDragging = false;
-        let currentX;
-        let currentY;
-        let initialX;
-        let initialY;
-        let xOffset = 0;
-        let yOffset = 0;
-
-        header.onmousedown = dragStart;
-
-        function dragStart(e) {
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
-
-            if (e.target === header) {
-                isDragging = true;
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', dragEnd);
-            }
-        }
-
+        let isDragging = false, xOffset = 0, yOffset = 0;
+        header.onmousedown = (e) => {
+            isDragging = true;
+            xOffset = e.clientX - parseFloat(panel.style.left || 0);
+            yOffset = e.clientY - parseFloat(panel.style.top || 0);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+        };
         function drag(e) {
             if (isDragging) {
-                e.preventDefault();
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
-
-                xOffset = currentX;
-                yOffset = currentY;
-
-                setTranslate(currentX, currentY, panel);
+                panel.style.left = (e.clientX - xOffset) + 'px';
+                panel.style.top = (e.clientY - yOffset) + 'px';
             }
         }
-
-        function setTranslate(xPos, yPos, el) {
-            // Combining with the CSS generic center transform
-            el.style.transform = `translate(calc(-50% + ${xPos}px), ${yPos}px)`;
-        }
-
-        function dragEnd(e) {
-            initialX = currentX;
-            initialY = currentY;
-
+        function dragEnd() {
             isDragging = false;
             document.removeEventListener('mousemove', drag);
             document.removeEventListener('mouseup', dragEnd);
