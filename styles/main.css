@@ -26,7 +26,7 @@ body {
 }
 
 .page-title {
-    font-size: 60px;
+    font-size: 100px;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -42,7 +42,7 @@ body {
     left: 0;
     width: 100%;
     /* 增加高度以容纳大字号的竖排文字 */
-    height: 80px;
+    height: 100px;
 
     /* 设计师搭配建议：沉浸式深湖绿 (Deep Lake Teal) */
     /* 既然背景是唯美的湖光山色，导航栏不应太“跳”，而应像水面的倒影一样融合 */
@@ -59,7 +59,7 @@ body {
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
 
     /* 顶部加一条极其微弱的亮线，模拟水面反光 */
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
 
     display: flex;
     align-items: center;
@@ -184,7 +184,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    width: 320px;
+    width: 400px;
     display: none;
     /* 允许拖拽 */
     user-select: none;
