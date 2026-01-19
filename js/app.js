@@ -147,7 +147,35 @@ class MeetingApp {
                 wrapper.appendChild(el);
                 container.appendChild(wrapper);
             });
+                // 如果 sections 为空，添加一个默认可编辑块
+                if (!page.sections || page.sections.length === 0) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'section';
+                    const el = document.createElement('div');
+                    el.textContent = '點擊此處添加內容';
+                    el.style.cursor = 'pointer';
+                    el.title = '點擊編輯內容';
+                    el.onclick = (e) => {
+                        e.stopPropagation();
+                        // 创建一个空 section 并传入编辑器
+                        const newSection = {
+                            type: 'text',
+                            content: '',
+                            style: {}
+                        };
+                        showEditPanel(newSection, el, () => {
+                            // 将新 section 添加到 pages
+                            if (!page.sections) page.sections = [];
+                            page.sections.push(newSection);
+                            this.saveData();
+                            this.selectPage(this.currentPageKey);
+                        });
+                    };
+                    wrapper.appendChild(el);
+                    container.appendChild(wrapper);
+                }
         }
+
     }
 
     saveData() {

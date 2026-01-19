@@ -1,5 +1,11 @@
+// === 全新全能编辑器 ===
 export function showEditPanel(section, targetEl, onSave) {
     const panel = document.getElementById('edit-panel');
+    if (!panel) {
+        console.error('Edit panel not found!');
+        return;
+    }
+
     // Save original styles for revert on cancel
     const originalStyles = {
         color: targetEl.style.color,
@@ -8,17 +14,18 @@ export function showEditPanel(section, targetEl, onSave) {
         content: targetEl.innerHTML
     };
 
-    panel.innerHTML = '';
+    // Reset panel position and display
     panel.style.transform = 'translateX(-50%)';
     panel.style.top = '20%';
     panel.style.display = 'block';
+    panel.className = 'editor-panel'; // 应用新样式
 
-    if (section.type === 'text') {
-        panel.innerHTML = `
+    // Create editor content
+    panel.innerHTML = `
       <h3>編輯內容 (富文本)</h3>
       
       <!-- 工具栏 -->
-      <div id="editor-toolbar">
+      <div class="editor-toolbar">
          <button class="editor-btn" data-cmd="bold" title="加粗"><b>B</b></button>
          <button class="editor-btn" data-cmd="italic" title="斜體"><i>I</i></button>
          <button class="editor-btn" data-cmd="underline" title="下劃線"><u>U</u></button>
@@ -43,20 +50,20 @@ export function showEditPanel(section, targetEl, onSave) {
       </div>
 
       <!-- 可编辑区域 -->
-      <div id="edit-content-area" contenteditable="true">${section.content}</div>
+      <div class="edit-content-area" contenteditable="true">${section.content || ''}</div>
 
-      <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
-          <label>全局字體：
-            <select id="edit-font">
+      <!-- 全局样式控制 -->
+      <div class="editor-controls">
+          <label>字體：</label>
+          <select id="edit-font">
               <option value="">預設</option>
               <option value="標楷體" ${section.style?.fontFamily?.includes('標楷體') ? 'selected' : ''}>標楷體</option>
               <option value="Microsoft JhengHei" ${section.style?.fontFamily?.includes('JhengHei') ? 'selected' : ''}>正黑體</option>
-            </select>
-          </label>
+          </select>
       </div>
-      <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
-          <label>全局字號：
-            <select id="edit-size">
+      <div class="editor-controls">
+          <label>字號：</label>
+          <select id="edit-size">
               <option value="24px" ${section.style?.fontSize === '24px' ? 'selected' : ''}>24px</option>
               <option value="28px" ${section.style?.fontSize === '28px' ? 'selected' : ''}>28px</option>
               <option value="32px" ${section.style?.fontSize === '32px' ? 'selected' : ''}>32px</option>
@@ -65,112 +72,129 @@ export function showEditPanel(section, targetEl, onSave) {
               <option value="48px" ${section.style?.fontSize === '48px' ? 'selected' : ''}>48px</option>
               <option value="60px" ${section.style?.fontSize === '60px' ? 'selected' : ''}>60px</option>
               <option value="80px" ${section.style?.fontSize === '80px' ? 'selected' : ''}>80px</option>
-            </select>
-          </label>
+          </select>
       </div>
-      <div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
-          <label>全局顏色：<input type="color" id="edit-color" value="${section.style?.color || '#ffffff'}"></label>
-          <span style="font-size:12px; color:#666;">(整段变色)</span>
+      <div class="editor-controls">
+          <label>顏色：</label>
+          <input type="color" id="edit-color" value="${section.style?.color || '#ffffff'}">
       </div>
-      <div style="text-align:right;">
+
+      <!-- 保存/取消按钮 -->
+      <div class="editor-actions">
           <button id="cancel-btn">取消</button>
           <button id="save-btn">確認修改</button>
       </div>
     `;
 
-        // === 现有逻辑：工具栏、预览、保存、取消、拖拽 ===
-        const contentArea = document.getElementById('edit-content-area');
-        const colorInput = document.getElementById('edit-color');
-        const sizeInput = document.getElementById('edit-size');
-        const fontInput = document.getElementById('edit-font');
+    // 获取 DOM 元素
+    const contentArea = panel.querySelector('.edit-content-area');
+    const colorInput = panel.querySelector('#edit-color');
+    const sizeInput = panel.querySelector('#edit-size');
+    const fontInput = panel.querySelector('#edit-font');
 
-        // Toolbar Text Color
-        const toolbarColorInput = document.getElementById('toolbar-color-input');
-        toolbarColorInput.oninput = (e) => {
-            document.execCommand('foreColor', false, e.target.value);
+    // Toolbar Text Color
+    const toolbarColorInput = panel.querySelector('#toolbar-color-input');
+    toolbarColorInput.oninput = (e) => {
+        document.execCommand('foreColor', false, e.target.value);
+        targetEl.innerHTML = contentArea.innerHTML;
+    };
+    toolbarColorInput.onclick = (e) => { e.target.value = null; };
+
+    // Bold, Italic, etc.
+    panel.querySelectorAll('.editor-btn:not(#toolbar-color-btn):not(#insert-audio-btn):not(#insert-video-btn)').forEach(btn => {
+        btn.onclick = (e) => {
+            e.preventDefault();
+            const cmd = btn.dataset.cmd;
+            document.execCommand(cmd, false, null);
+            contentArea.focus();
             targetEl.innerHTML = contentArea.innerHTML;
         };
-        toolbarColorInput.onclick = (e) => { e.target.value = null; };
+    });
 
-        // Bold, Italic, etc.
-        panel.querySelectorAll('.editor-btn:not(#toolbar-color-btn):not(#insert-audio-btn):not(#insert-video-btn)').forEach(btn => {
-            btn.onclick = (e) => {
-                e.preventDefault();
-                const cmd = btn.dataset.cmd;
-                document.execCommand(cmd, false, null);
-                contentArea.focus();
-                targetEl.innerHTML = contentArea.innerHTML;
-            };
-        });
-
-        // === 新增：插入音訊 ===
-        document.getElementById('insert-audio-btn')?.addEventListener('click', () => {
-            const url = prompt('請輸入 MP3 音訊網址\n（例如：assets/music/歡迎歌.mp3）');
-            if (url && url.trim()) {
-                const cleanUrl = url.trim();
-                const audioHtml = `<div class="media-section"><audio controls src="${cleanUrl}" type="audio/mpeg"></audio></div>`;
-                document.execCommand('insertHTML', false, audioHtml);
-                targetEl.innerHTML = contentArea.innerHTML;
+    // === 插入音訊 ===
+    panel.querySelector('#insert-audio-btn')?.addEventListener('click', () => {
+        const url = prompt('請輸入 MP3 音訊網址\n（例如：assets/music/欢迎歌.mp3）');
+        if (url && url.trim()) {
+            const cleanUrl = url.trim();
+            const audioHtml = `<div class="editor-media"><audio controls src="${cleanUrl}" type="audio/mpeg"></audio></div>`;
+            
+            // 插入到光标位置
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                range.insertNode(document.createRange().createContextualFragment(audioHtml));
+            } else {
+                contentArea.insertAdjacentHTML('beforeend', audioHtml);
             }
-        });
-
-        // === 新增：插入影片 ===
-        document.getElementById('insert-video-btn')?.addEventListener('click', () => {
-            const url = prompt('請輸入 YouTube 或影片網址');
-            if (url && url.trim()) {
-                const cleanUrl = url.trim();
-                const videoHtml = `<div class="media-section"><a href="${cleanUrl}" target="_blank" style="display:inline-block;padding:8px 16px;background:#2c3e50;color:white;border-radius:4px;text-decoration:none;">▶ 點擊觀看影片</a></div>`;
-                document.execCommand('insertHTML', false, videoHtml);
-                targetEl.innerHTML = contentArea.innerHTML;
-            }
-        });
-
-        // Live Preview
-        colorInput.oninput = (e) => { targetEl.style.color = e.target.value; };
-        sizeInput.onchange = (e) => { targetEl.style.fontSize = e.target.value; };
-        fontInput.onchange = (e) => { targetEl.style.fontFamily = e.target.value; };
-        contentArea.oninput = (e) => { targetEl.innerHTML = contentArea.innerHTML; };
-
-        // Save
-        document.getElementById('save-btn').onclick = () => {
-            section.content = contentArea.innerHTML;
-            section.style = section.style || {};
-            section.style.fontSize = sizeInput.value;
-            section.style.color = colorInput.value;
-            section.style.fontFamily = fontInput.value;
-            onSave();
-            panel.style.display = 'none';
-        };
-
-        // Cancel
-        document.getElementById('cancel-btn').onclick = () => {
-            targetEl.style.color = originalStyles.color;
-            targetEl.style.fontSize = originalStyles.fontSize;
-            targetEl.style.fontFamily = originalStyles.fontFamily;
-            targetEl.innerHTML = originalStyles.content;
-            panel.style.display = 'none';
-        };
-
-        // Draggable
-        const header = panel.querySelector('h3');
-        let isDragging = false, xOffset = 0, yOffset = 0;
-        header.onmousedown = (e) => {
-            isDragging = true;
-            xOffset = e.clientX - parseFloat(panel.style.left || 0);
-            yOffset = e.clientY - parseFloat(panel.style.top || 0);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-        };
-        function drag(e) {
-            if (isDragging) {
-                panel.style.left = (e.clientX - xOffset) + 'px';
-                panel.style.top = (e.clientY - yOffset) + 'px';
-            }
+            
+            targetEl.innerHTML = contentArea.innerHTML;
         }
-        function dragEnd() {
-            isDragging = false;
-            document.removeEventListener('mousemove', drag);
-            document.removeEventListener('mouseup', dragEnd);
+    });
+
+    // === 插入影片 ===
+    panel.querySelector('#insert-video-btn')?.addEventListener('click', () => {
+        const url = prompt('請輸入 YouTube 或影片網址');
+        if (url && url.trim()) {
+            const cleanUrl = url.trim();
+            const videoHtml = `<div class="editor-media"><a href="${cleanUrl}" target="_blank" style="display:inline-block;padding:8px 16px;background:#2c3e50;color:white;border-radius:4px;text-decoration:none;">▶ 點擊觀看影片</a></div>`;
+            
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                range.insertNode(document.createRange().createContextualFragment(videoHtml));
+            } else {
+                contentArea.insertAdjacentHTML('beforeend', videoHtml);
+            }
+            
+            targetEl.innerHTML = contentArea.innerHTML;
         }
+    });
+
+    // Live Preview
+    colorInput.oninput = (e) => { targetEl.style.color = e.target.value; };
+    sizeInput.onchange = (e) => { targetEl.style.fontSize = e.target.value; };
+    fontInput.onchange = (e) => { targetEl.style.fontFamily = e.target.value; };
+    contentArea.oninput = (e) => { targetEl.innerHTML = contentArea.innerHTML; };
+
+    // Save
+    panel.querySelector('#save-btn').onclick = () => {
+        section.content = contentArea.innerHTML;
+        section.style = section.style || {};
+        section.style.fontSize = sizeInput.value;
+        section.style.color = colorInput.value;
+        section.style.fontFamily = fontInput.value;
+        onSave();
+        panel.style.display = 'none';
+    };
+
+    // Cancel
+    panel.querySelector('#cancel-btn').onclick = () => {
+        targetEl.style.color = originalStyles.color;
+        targetEl.style.fontSize = originalStyles.fontSize;
+        targetEl.style.fontFamily = originalStyles.fontFamily;
+        targetEl.innerHTML = originalStyles.content;
+        panel.style.display = 'none';
+    };
+
+    // Draggable
+    const header = panel.querySelector('h3');
+    let isDragging = false, xOffset = 0, yOffset = 0;
+    header.onmousedown = (e) => {
+        isDragging = true;
+        xOffset = e.clientX - parseFloat(panel.style.left || 0);
+        yOffset = e.clientY - parseFloat(panel.style.top || 0);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+    };
+    function drag(e) {
+        if (isDragging) {
+            panel.style.left = (e.clientX - xOffset) + 'px';
+            panel.style.top = (e.clientY - yOffset) + 'px';
+        }
+    }
+    function dragEnd() {
+        isDragging = false;
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', dragEnd);
     }
 }

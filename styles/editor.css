@@ -1,0 +1,184 @@
+/* ==============================
+   全能编辑器专属样式
+   用于 liferiver-onlinemeeting-av2 项目
+   ============================== */
+
+/* 编辑面板主容器 */
+#edit-panel {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    width: 340px;
+    display: none;
+    user-select: none;
+}
+
+/* 面板标题（可拖拽） */
+#edit-panel h3 {
+    margin-top: 0;
+    cursor: move;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 工具栏 */
+#editor-toolbar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    background: #f9f9f9;
+    padding: 8px;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.editor-btn {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editor-btn:hover {
+    background: #e0e0e0;
+}
+
+/* 富文本编辑区 */
+#edit-content-area {
+    width: 100%;
+    min-height: 100px;
+    max-height: 200px;
+    padding: 10px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow-y: auto;
+    background: #fff;
+    cursor: text;
+    user-select: text;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    font-family: inherit;
+}
+
+/* 控制项（字体/字号/颜色） */
+.editor-control-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.editor-control-group label {
+    font-size: 14px;
+    color: #555;
+    white-space: nowrap;
+}
+
+.editor-control-group select,
+.editor-control-group input {
+    padding: 6px;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 120px;
+}
+
+/* 操作按钮 */
+.editor-actions {
+    text-align: right;
+    margin-top: 12px;
+}
+
+.editor-actions button {
+    padding: 6px 12px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#save-btn {
+    background: #27ae60;
+    color: white;
+}
+
+#cancel-btn {
+    background: #95a5a6;
+    color: white;
+}
+
+/* === 多媒体插入区域样式 === */
+/* 此类由编辑器动态插入到页面内容中 */
+.editor-media {
+    width: 100%;
+    max-width: 600px;
+    margin: 12px auto;
+    text-align: center;
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.editor-media audio,
+.editor-media video {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 8px;
+    display: block;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.editor-media a {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #2c3e50;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+}
+
+/* 响应式优化（手机端） */
+@media (max-width: 480px) {
+    #edit-panel {
+        width: 90vw;
+        padding: 16px;
+    }
+
+    .editor-btn {
+        min-width: 28px;
+        padding: 4px;
+        font-size: 12px;
+    }
+
+    #edit-content-area {
+        min-height: 80px;
+        font-size: 14px;
+    }
+}
