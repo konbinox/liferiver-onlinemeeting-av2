@@ -1,5 +1,5 @@
-import { showEditPanel } from './editor.js';
-
+// 修改app.js中的导入
+import { showEditPanel } from './suneditor-integration.js';  // 替换原有的editor.js
 class MeetingApp {
     constructor() {
         this.meetingData = null;
