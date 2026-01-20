@@ -182,3 +182,98 @@
         font-size: 14px;
     }
 }
+/* ==============================
+   多媒体专用样式
+   ============================== */
+
+/* 多媒体插入面板 */
+#media-insert-panel {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    width: 300px;
+    display: none;
+}
+
+#media-insert-panel h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 16px;
+    text-align: center;
+}
+
+#media-url {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#media-insert-panel button {
+    padding: 6px 12px;
+    margin: 0 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#confirm-media {
+    background: #27ae60;
+    color: white;
+}
+
+#cancel-media {
+    background: #95a5a6;
+    color: white;
+}
+
+/* 自定义多媒体区块 */
+.custom-media-block {
+    width: 100%;
+    max-width: 500px;
+    margin: 16px auto;
+    text-align: center;
+    background: rgba(44, 62, 80, 0.3);
+    border-radius: 10px;
+    padding: 12px;
+    position: relative;
+}
+
+.play-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+}
+
+.play-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+.media-player {
+    margin-top: 12px;
+    display: none;
+}
+
+.media-player audio,
+.media-player video {
+    width: 100%;
+    border-radius: 8px;
+}

@@ -175,7 +175,21 @@ class MeetingApp {
                     container.appendChild(wrapper);
                 }
         }
-
+                    // === 多媒体播放器交互 ===
+                    container.addEventListener('click', (e) => {
+                        // 点击“播放”按钮时展开播放器
+                        if (e.target.classList.contains('play-btn')) {
+                            const block = e.target.closest('.custom-media-block');
+                            const player = block.querySelector('.media-player');
+                            player.style.display = 'block';
+                            e.target.style.display = 'none';
+                        }
+                        
+                        // 点击视频链接时保持默认行为（新标签页打开）
+                        if (e.target.tagName === 'A' && e.target.closest('.custom-media-block')) {
+                            return; // 不阻止
+                        }
+                    });
     }
 
     saveData() {

@@ -111,44 +111,66 @@ export function showEditPanel(section, targetEl, onSave) {
         };
     });
 
-    // === 插入音訊 ===
-    panel.querySelector('#insert-audio-btn')?.addEventListener('click', () => {
-        const url = prompt('請輸入 MP3 音訊網址\n（例如：assets/music/欢迎歌.mp3）');
-        if (url && url.trim()) {
-            const cleanUrl = url.trim();
-            const audioHtml = `<div class="editor-media"><audio controls src="${cleanUrl}" type="audio/mpeg"></audio></div>`;
-            
-            // 插入到光标位置
-            const selection = window.getSelection();
-            if (selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
-                range.insertNode(document.createRange().createContextualFragment(audioHtml));
-            } else {
-                contentArea.insertAdjacentHTML('beforeend', audioHtml);
-            }
-            
-            targetEl.innerHTML = contentArea.innerHTML;
-        }
-    });
+    // === 新增：打开多媒体插入面板 ===
+function openMediaInsertPanel(type, contentArea, targetEl) {
+    // 创建或获取面板
+    let panel = document.getElementById('media-insert-panel');
+    if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'media-insert-panel';
+        panel.innerHTML = `
+            <h4>插入${type === 'audio' ? '音訊' : '影片'}</h4>
+            <input type="text" id="media-url" placeholder="輸入網址" />
+            <div>
+                <button id="confirm-media">確定</button>
+                <button id="cancel-media">取消</button>
+            </div>
+        `;
+        document.body.appendChild(panel);
+    }
 
-    // === 插入影片 ===
-    panel.querySelector('#insert-video-btn')?.addEventListener('click', () => {
-        const url = prompt('請輸入 YouTube 或影片網址');
-        if (url && url.trim()) {
-            const cleanUrl = url.trim();
-            const videoHtml = `<div class="editor-media"><a href="${cleanUrl}" target="_blank" style="display:inline-block;padding:8px 16px;background:#2c3e50;color:white;border-radius:4px;text-decoration:none;">▶ 點擊觀看影片</a></div>`;
+    panel.style.display = 'block';
+
+    // 确认插入
+    const confirmBtn = panel.querySelector('#confirm-media');
+    const cancelBtn = panel.querySelector('#cancel-media');
+    const urlInput = panel.querySelector('#media-url');
+
+    const insertMedia = () => {
+        const url = urlInput.value.trim();
+        if (url) {
+            const mediaType = type === 'audio' ? 'audio' : 'video';
+            const mediaBlock = `
+                <div class="custom-media-block" data-type="${mediaType}" data-src="${url}">
+                    <button class="play-btn">▶ ${type === 'audio' ? '播放音訊' : '觀看影片'}</button>
+                    <div class="media-player">
+                        ${type === 'audio' 
+                            ? `<audio src="${url}" controls></audio>` 
+                            : `<a href="${url}" target="_blank" style="display:inline-block;padding:8px 16px;background:#2c3e50;color:white;border-radius:4px;text-decoration:none;">點擊開啟影片</a>`}
+                    </div>
+                </div>
+            `;
             
-            const selection = window.getSelection();
-            if (selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
-                range.insertNode(document.createRange().createContextualFragment(videoHtml));
-            } else {
-                contentArea.insertAdjacentHTML('beforeend', videoHtml);
-            }
-            
+            contentArea.insertAdjacentHTML('beforeend', mediaBlock);
             targetEl.innerHTML = contentArea.innerHTML;
         }
-    });
+        panel.style.display = 'none';
+    };
+
+    confirmBtn.onclick = insertMedia;
+    cancelBtn.onclick = () => panel.style.display = 'none';
+    urlInput.onkeypress = (e) => { if (e.key === 'Enter') insertMedia(); };
+    urlInput.focus();
+}
+
+// === 替换原有按钮事件 ===
+panel.querySelector('#insert-audio-btn')?.addEventListener('click', () => {
+    openMediaInsertPanel('audio', contentArea, targetEl);
+});
+
+panel.querySelector('#insert-video-btn')?.addEventListener('click', () => {
+    openMediaInsertPanel('video', contentArea, targetEl);
+});
 
     // Live Preview
     colorInput.oninput = (e) => { targetEl.style.color = e.target.value; };
